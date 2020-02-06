@@ -4,14 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
+    <title>Rock, Paper, Scissors!</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <button id="rock">Rock!</button>
     <button id="paper">Paper!</button>
     <button id="scissors">Scissors!</button>
 
-    <div class="results"></div>
+    <div>
+      <p id="message"></p>
+      <p id="score"></p>
+    </div>
 
     <script>
       function computerPlay() {
@@ -22,6 +26,14 @@
       function playRound(e) {
         const playerSelection = e.target.id;
         const computerSelection = computerPlay();
+        const message = document.querySelector("#message");
+        const score = document.querySelector("#score");
+
+        if (wins == 5 || losses == 5) {
+          wins = 0;
+          losses = 0;
+        }
+
         switch (computerSelection) {
           case "rock":
             outcome =
@@ -59,17 +71,21 @@
         } else if (outcome.includes("lose")) {
           losses++;
         }
-        return outcome;
+        message.textContent = outcome;
+        score.textContent = `${wins} - ${losses}`;
+
+        if (wins == 5 || losses == 5) {
+          message.textContent =
+            wins == 5 ? "You won the match!" : "You lost the match!";
+        }
       }
 
       let wins = 0,
         losses = 0;
-
       const buttons = document.querySelectorAll("button");
       buttons.forEach(button => button.addEventListener("click", playRound));
 
       const resultsContainer = document.querySelector(".results");
-      
     </script>
   </body>
 </html>
